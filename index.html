@@ -150,7 +150,7 @@
 
   .nav-links {
     display: flex;
-    gap: 28px;
+    gap: 20px;
     align-items: center;
     font-size: 12px;
     color: rgba(244, 241, 234, 0.75);
@@ -171,9 +171,55 @@
     color: #f4f1ea;
   }
 
+  /* ---------- NAV NIGHT/DAY MODE TOGGLE BUTTON ---------- */
+  .theme-toggle-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid rgba(244, 241, 234, 0.35);
+    color: var(--header-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 2px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .theme-toggle-btn:hover {
+    transform: scale(1.1);
+    border-color: rgba(244, 241, 234, 0.9);
+  }
+
+  .theme-toggle-btn svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sun-icon {
+    display: none;
+  }
+
+  [data-theme="dark"] .moon-icon {
+    display: none;
+  }
+
+  [data-theme="dark"] .sun-icon {
+    display: block;
+  }
+
   @media (max-width: 768px) {
-    .nav-links { gap: 14px; font-size: 10.5px; }
+    .nav-links { gap: 12px; font-size: 10.5px; }
     .brand-switch { min-width: 190px; font-size: 13px; }
+    .theme-toggle-btn { width: 22px; height: 22px; }
+    .theme-toggle-btn svg { width: 11px; height: 11px; }
   }
 
   /* ---------- HERO ---------- */
@@ -588,52 +634,6 @@
     animation: nudge-left 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 
-  /* ---------- FLOATING NIGHT/DAY MODE TOGGLE BUTTON ---------- */
-  .theme-toggle-btn {
-    position: fixed;
-    bottom: 76px;
-    right: 24px;
-    z-index: 99;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--bg-raised);
-    border: 1px solid var(--hair);
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-  }
-
-  .theme-toggle-btn:hover {
-    transform: scale(1.08);
-  }
-
-  .theme-toggle-btn svg {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .sun-icon {
-    display: none;
-  }
-
-  [data-theme="dark"] .moon-icon {
-    display: none;
-  }
-
-  [data-theme="dark"] .sun-icon {
-    display: block;
-  }
-
   @keyframes nudge-right {
     0%   { transform: translateX(0); }
     50%  { transform: translateX(15px); }
@@ -663,6 +663,23 @@
     <span class="sub mono"> or Sele for short</span>
   </a>
   <nav class="nav-links mono">
+    <!-- Day/Night Toggle Button Next to REEL -->
+    <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Night Mode">
+      <svg class="moon-icon" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg class="sun-icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
     <a href="#">REEL</a>
     <a href="#work">WORK</a>
     <a href="#about">ABOUT</a>
@@ -814,33 +831,13 @@
   <span class="mono">BUILT FRAME BY FRAME</span>
 </footer>
 
-<!-- FLOATING NIGHT/DAY MODE TOGGLE BUTTON -->
-<button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Night Mode">
-  <!-- Moon Icon (Shown in Light Mode) -->
-  <svg class="moon-icon" viewBox="0 0 24 24">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-  </svg>
-  <!-- Sun Icon (Shown in Dark Mode) -->
-  <svg class="sun-icon" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="5"></circle>
-    <line x1="12" y1="1" x2="12" y2="3"></line>
-    <line x1="12" y1="21" x2="12" y2="23"></line>
-    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-    <line x1="1" y1="12" x2="3" y2="12"></line>
-    <line x1="21" y1="12" x2="23" y2="12"></line>
-    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-  </svg>
-</button>
-
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 1. NIGHT MODE TOGGLE (STARTS IN LIGHT MODE) ---
+    // --- 1. NIGHT MODE TOGGLE ---
     const themeBtn = document.getElementById('theme-toggle');
     
-    // Ensure default load is always light mode
+    // Default load light mode
     document.documentElement.removeAttribute('data-theme');
     localStorage.setItem('theme', 'light');
 
