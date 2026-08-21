@@ -150,15 +150,66 @@
     transform: translateY(0);
   }
 
-  .nav-links {
+  /* ---------- UNIVERSAL HAMBURGER & DROPDOWN NAV ---------- */
+  .hamburger {
     display: flex;
-    gap: 20px;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    width: 100%;
+    height: 2px;
+    background-color: var(--header-text);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--header-bg-solid);
+    flex-direction: column;
+    gap: 0;
+    border-bottom: 1px solid rgba(244, 241, 234, 0.15);
+    display: none;
+    padding: 8px 0;
     font-size: 12px;
     color: rgba(244, 241, 234, 0.75);
   }
 
+  .nav-links.active {
+    display: flex;
+  }
+
   .nav-links a {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(244, 241, 234, 0.08);
     color: inherit;
     display: inline-block;
     transition: color 0.2s ease, transform 0.2s ease;
@@ -169,7 +220,11 @@
     transform: scale(1.05);
   }
 
-  /* ---------- THEME TOGGLE (DESKTOP CENTER & MOBILE DROPDOWN) ---------- */
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+
+  /* ---------- THEME TOGGLE ---------- */
   .header-theme-center {
     position: absolute;
     left: 50%;
@@ -228,9 +283,8 @@
     display: block;
   }
 
-  /* Mobile Item inside Dropdown */
   .mobile-theme-item {
-    display: none;
+    display: flex;
     width: 100%;
     padding: 12px 20px;
     justify-content: center;
@@ -238,89 +292,13 @@
     border-bottom: 1px solid rgba(244, 241, 234, 0.08);
   }
 
-  /* ---------- MOBILE HAMBURGER BUTTON ---------- */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 24px;
-    height: 18px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 101;
-  }
-
-  .hamburger span {
-    width: 100%;
-    height: 2px;
-    background-color: var(--header-text);
-    border-radius: 2px;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .hamburger.open span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-
-  .hamburger.open span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.open span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+  .mobile-theme-item .theme-toggle-btn svg {
+    width: 14.4px;
+    height: 14.4px;
   }
 
   @media (max-width: 768px) {
     .brand-switch { min-width: 190px; font-size: 13px; }
-    
-    .header-theme-center {
-      display: none;
-    }
-
-    .mobile-theme-item {
-      display: flex;
-    }
-
-    .mobile-theme-item .theme-toggle-btn svg {
-      width: 14.4px;
-      height: 14.4px;
-    }
-
-    .hamburger {
-      display: flex;
-    }
-
-    .nav-links {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--header-bg-solid);
-      flex-direction: column;
-      gap: 0;
-      border-bottom: 1px solid rgba(244, 241, 234, 0.15);
-      display: none;
-      padding: 8px 0;
-    }
-
-    .nav-links.active {
-      display: flex;
-    }
-
-    .nav-links a {
-      width: 100%;
-      text-align: center;
-      padding: 14px 20px;
-      font-size: 13px;
-      letter-spacing: 0.05em;
-      border-bottom: 1px solid rgba(244, 241, 234, 0.08);
-    }
-
-    .nav-links a:last-child {
-      border-bottom: none;
-    }
   }
 
   /* ---------- HERO ---------- */
@@ -784,7 +762,7 @@
     </button>
   </div>
 
-  <!-- Mobile Hamburger Menu Button -->
+  <!-- Universal Hamburger Menu Button -->
   <button type="button" class="hamburger" id="hamburger-btn" aria-label="Toggle Navigation Menu">
     <span></span>
     <span></span>
@@ -792,7 +770,6 @@
   </button>
 
   <nav class="nav-links mono">
-    <!-- Mobile Theme Toggle inside Dropdown -->
     <div class="mobile-theme-item">
       <button type="button" class="theme-toggle-btn theme-btn" aria-label="Toggle Dark Mode">
         <svg class="moon-icon" viewBox="0 0 24 24">
@@ -849,7 +826,7 @@
   </div>
 
   <div class="work-grid">
-    <!-- Nivea (First) -->
+    <!-- Nivea -->
     <div class="work-card">
       <div class="work-media">
         <iframe src="https://www.youtube.com/embed/VpuIx_WJIVM?rel=0" title="Nivea" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
@@ -983,7 +960,7 @@
       btn.addEventListener('click', toggleTheme);
     });
 
-    // --- 2. MOBILE HAMBURGER MENU TOGGLE ---
+    // --- 2. HAMBURGER MENU TOGGLE ---
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinks = document.querySelector('.nav-links');
     const navAnchors = navLinks.querySelectorAll('a');
