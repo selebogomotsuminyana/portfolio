@@ -526,7 +526,7 @@
 
   /* ---------- REEL SWITCH CTA ---------- */
   .comp-reel-cta {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
@@ -538,7 +538,15 @@
     cursor: pointer;
     background: none;
     border: none;
-    padding: 0;
+    padding: 10px 16px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .comp-reel-cta span,
+  .comp-reel-cta svg {
+    pointer-events: none;
   }
 
   .comp-reel-cta:hover {
@@ -555,7 +563,6 @@
     animation: nudge-right 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 
-  /* Switched State: Places arrow on left, flips graphic horizontally, moves left by 15px */
   .comp-reel-cta.is-comp .comp-reel-arrow {
     order: -1;
     animation: nudge-left 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
@@ -568,9 +575,9 @@
   }
 
   @keyframes nudge-left {
-    0%   { transform: scaleX(-1) translateX(0); }
-    50%  { transform: scaleX(-1) translateX(15px); }
-    100% { transform: scaleX(-1) translateX(0); }
+    0%   { transform: rotate(180deg) translateX(0); }
+    50%  { transform: rotate(180deg) translateX(15px); }
+    100% { transform: rotate(180deg) translateX(0); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -631,7 +638,7 @@
     <!-- Nivea (First) -->
     <div class="work-card">
       <div class="work-media">
-        <iframe src="https://www.youtube.com/embed/gpt_WUBv0ZA?rel=0" title="Nivea" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <iframe src="https://www.youtube.com/embed/VpuIx_WJIVM?rel=0" title="Nivea" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
       </div>
       <div class="work-content">
         <div class="work-header-row">
@@ -661,13 +668,13 @@
     <!-- Woolworths -->
     <div class="work-card">
       <div class="work-media">
-        <iframe src="https://www.youtube.com/embed/VpuIx_WJIVM?rel=0" title="Woolworths" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <iframe src="https://www.youtube.com/embed/gpt_WUBv0ZA?rel=0" title="Woolworths" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
       </div>
       <div class="work-content">
         <div class="work-header-row">
           <h3>Woolworths</h3>
         </div>
-        <p class="work-desc">Self-directed spec piece acting as the lead shot on the reel. A close-up liquid and ice simulation built to sit alongside real FMCG campaign work.</p>
+        <p class="work-desc">Self-directed spec piece acting as the lead shot on the reel. Ensuring the drink is appetising, the pace is quick and fun and that it matches the woolworths CI.</p>
         
         <div class="project-meta-group">
           <span class="meta-label mono">Skills</span>
@@ -764,7 +771,8 @@
 
     let activeReel = 'motion';
 
-    reelBtn.addEventListener('click', () => {
+    const handleReelToggle = (e) => {
+      if (e) e.preventDefault();
       if (activeReel === 'motion') {
         activeReel = 'comp';
         reelIframe.src = reelData.comp.src;
@@ -778,7 +786,9 @@
         reelText.textContent = reelData.motion.btnText;
         reelBtn.classList.remove('is-comp');
       }
-    });
+    };
+
+    reelBtn.addEventListener('click', handleReelToggle);
 
     // --- 2. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
     const sections = document.querySelectorAll('section[id]');
