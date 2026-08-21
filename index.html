@@ -20,7 +20,6 @@
     --hair: #d6d0c4;
     --teal: #426475;
     --header-bg: rgba(66, 100, 117, 0.92);
-    --header-bg-solid: #426475;
     --header-text: #f4f1ea;
     --maxw: 1200px;
   }
@@ -33,7 +32,6 @@
     --hair: #2e353b;
     --teal: #638b9e;
     --header-bg: rgba(99, 139, 158, 0.92);
-    --header-bg-solid: #638b9e;
     --header-text: #f4f1ea;
   }
 
@@ -189,7 +187,9 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--header-bg-solid);
+    background: var(--header-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     flex-direction: column;
     gap: 0;
     border-bottom: 1px solid rgba(244, 241, 234, 0.15);
@@ -197,6 +197,7 @@
     padding: 8px 0;
     font-size: 12px;
     color: rgba(244, 241, 234, 0.75);
+    transition: background-color 0.3s ease;
   }
 
   .nav-links.active {
@@ -225,24 +226,6 @@
   }
 
   /* ---------- THEME TOGGLE ---------- */
-  .header-theme-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .header-theme-center.fade-out {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
   .theme-toggle-btn {
     background: transparent;
     border: none;
@@ -293,8 +276,8 @@
   }
 
   .mobile-theme-item .theme-toggle-btn svg {
-    width: 14.4px;
-    height: 14.4px;
+    width: 16px;
+    height: 16px;
   }
 
   @media (max-width: 768px) {
@@ -742,26 +725,6 @@
     <span class="sub mono"> or Sele for short</span>
   </a>
 
-  <!-- Centered Desktop Theme Toggle -->
-  <div class="header-theme-center" id="desktop-theme-wrapper">
-    <button type="button" class="theme-toggle-btn theme-btn" aria-label="Toggle Dark Mode">
-      <svg class="moon-icon" viewBox="0 0 24 24">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-      </svg>
-      <svg class="sun-icon" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      </svg>
-    </button>
-  </div>
-
   <!-- Universal Hamburger Menu Button -->
   <button type="button" class="hamburger" id="hamburger-btn" aria-label="Toggle Navigation Menu">
     <span></span>
@@ -1016,27 +979,7 @@
 
     reelBtn.addEventListener('click', handleReelToggle);
 
-    // --- 4. PERSISTENT DARK MODE ICON HIDING PAST WORK SECTION ---
-    const desktopThemeWrapper = document.getElementById('desktop-theme-wrapper');
-    const workSection = document.getElementById('work');
-
-    const handleThemeIconVisibility = () => {
-      if (!desktopThemeWrapper || !workSection) return;
-      
-      const workTop = workSection.offsetTop;
-      const triggerPoint = workTop + (workSection.offsetHeight * 0.25);
-      
-      if (window.scrollY >= triggerPoint) {
-        desktopThemeWrapper.classList.add('fade-out');
-      } else {
-        desktopThemeWrapper.classList.remove('fade-out');
-      }
-    };
-
-    window.addEventListener('scroll', handleThemeIconVisibility, { passive: true });
-    handleThemeIconVisibility();
-
-    // --- 5. REVEAL WORK CARDS ---
+    // --- 4. REVEAL WORK CARDS ---
     const workCards = document.querySelectorAll('.work-card');
 
     const ioCards = new IntersectionObserver((entries) => {
