@@ -20,8 +20,21 @@
     --hair: #d6d0c4;
     --teal: #426475;
     --header-bg: rgba(66, 100, 117, 0.92);
+    --header-bg-solid: #426475;
     --header-text: #f4f1ea;
     --maxw: 1200px;
+  }
+
+  [data-theme="dark"] {
+    --bg: #121518;
+    --bg-raised: #1c2024;
+    --ink: #f4f1ea;
+    --ink-dim: #9aa5ad;
+    --hair: #2e353b;
+    --teal: #638b9e;
+    --header-bg: rgba(99, 139, 158, 0.92);
+    --header-bg-solid: #638b9e;
+    --header-text: #f4f1ea;
   }
 
   * { 
@@ -39,6 +52,7 @@
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection { 
@@ -91,6 +105,7 @@
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(244, 241, 234, 0.15);
     color: var(--header-text);
+    transition: background-color 0.3s ease;
   }
 
   .brand-switch {
@@ -158,6 +173,66 @@
     color: #f4f1ea;
   }
 
+  /* ---------- THEME TOGGLE (DESKTOP CENTER & MOBILE DROPDOWN) ---------- */
+  .header-theme-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle-btn {
+    background: transparent;
+    border: none;
+    color: var(--header-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 4px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.85;
+  }
+
+  .theme-toggle-btn:hover {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  .theme-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sun-icon {
+    display: none;
+  }
+
+  [data-theme="dark"] .moon-icon {
+    display: none;
+  }
+
+  [data-theme="dark"] .sun-icon {
+    display: block;
+  }
+
+  /* Mobile Item inside Dropdown */
+  .mobile-theme-item {
+    display: none;
+    width: 100%;
+    padding: 12px 20px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(244, 241, 234, 0.08);
+  }
+
   /* ---------- MOBILE HAMBURGER BUTTON ---------- */
   .hamburger {
     display: none;
@@ -195,6 +270,14 @@
   @media (max-width: 768px) {
     .brand-switch { min-width: 190px; font-size: 13px; }
     
+    .header-theme-center {
+      display: none;
+    }
+
+    .mobile-theme-item {
+      display: flex;
+    }
+
     .hamburger {
       display: flex;
     }
@@ -204,9 +287,7 @@
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--header-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--header-bg-solid); /* Fully opaque */
       flex-direction: column;
       gap: 0;
       border-bottom: 1px solid rgba(244, 241, 234, 0.15);
@@ -313,6 +394,7 @@
     background: var(--bg-raised);
     border-radius: 4px;
     margin: 16px 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .viewport-container::before,
@@ -368,7 +450,7 @@
     overflow: hidden;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity .7s cubic-bezier(0.16, 1, 0.3, 1), transform .3s ease, box-shadow .3s ease;
+    transition: opacity .7s cubic-bezier(0.16, 1, 0.3, 1), transform .3s ease, box-shadow .3s ease, background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .work-card.in-view {
@@ -512,6 +594,7 @@
     border-radius: 4px; 
     padding: 24px;
     margin-top: 28px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .media-pool-head {
@@ -671,6 +754,26 @@
     <span class="sub mono"> or Sele for short</span>
   </a>
 
+  <!-- Centered Desktop Theme Toggle -->
+  <div class="header-theme-center">
+    <button type="button" class="theme-toggle-btn theme-btn" aria-label="Toggle Dark Mode">
+      <svg class="moon-icon" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg class="sun-icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
+  </div>
+
   <!-- Mobile Hamburger Menu Button -->
   <button type="button" class="hamburger" id="hamburger-btn" aria-label="Toggle Navigation Menu">
     <span></span>
@@ -679,6 +782,25 @@
   </button>
 
   <nav class="nav-links mono">
+    <!-- Mobile Theme Toggle inside Dropdown -->
+    <div class="mobile-theme-item">
+      <button type="button" class="theme-toggle-btn theme-btn" aria-label="Toggle Dark Mode">
+        <svg class="moon-icon" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="sun-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </div>
     <a href="#">REEL</a>
     <a href="#work">WORK</a>
     <a href="#about">ABOUT</a>
@@ -833,7 +955,25 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 1. MOBILE HAMBURGER MENU TOGGLE ---
+    // --- 1. DARK MODE TOGGLE FUNCTIONALITY ---
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    
+    const toggleTheme = () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    };
+
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', toggleTheme);
+    });
+
+    // --- 2. MOBILE HAMBURGER MENU TOGGLE ---
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinks = document.querySelector('.nav-links');
     const navAnchors = navLinks.querySelectorAll('a');
@@ -843,7 +983,6 @@
       navLinks.classList.toggle('active');
     });
 
-    // Close mobile dropdown when clicking a section link
     navAnchors.forEach(link => {
       link.addEventListener('click', () => {
         hamburgerBtn.classList.remove('open');
@@ -851,7 +990,7 @@
       });
     });
 
-    // --- 2. DYNAMIC REEL SWITCHER ---
+    // --- 3. DYNAMIC REEL SWITCHER ---
     const reelIframe = document.getElementById('main-reel-iframe');
     const reelBtn = document.getElementById('reel-toggle-btn');
     const reelText = document.getElementById('reel-toggle-text');
@@ -890,7 +1029,7 @@
 
     reelBtn.addEventListener('click', handleReelToggle);
 
-    // --- 3. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
+    // --- 4. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
     const sections = document.querySelectorAll('section[id]');
 
     const sectionObserver = new IntersectionObserver((entries) => {
@@ -910,7 +1049,7 @@
 
     sections.forEach(sec => sectionObserver.observe(sec));
 
-    // --- 4. REVEAL WORK CARDS ---
+    // --- 5. REVEAL WORK CARDS ---
     const workCards = document.querySelectorAll('.work-card');
 
     const ioCards = new IntersectionObserver((entries) => {
