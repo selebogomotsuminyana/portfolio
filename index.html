@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selebogo Motsuminyana — Motion Designer & Compositor</title>
+
+<!-- Browser Tab Title -->
+<title>Selebogo Motsuminyana</title>
+
 <meta name="description" content="Motion design and compositing portfolio — Selebogo Motsuminyana, Johannesburg. After Effects, Blender, DaVinci Resolve Fusion.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +19,20 @@
     --ink-dim: #636e75;
     --hair: #d6d0c4;
     --teal: #426475;
+    --header-bg: rgba(66, 100, 117, 0.92);
+    --header-text: #f4f1ea;
     --maxw: 1200px;
+  }
+
+  [data-theme="dark"] {
+    --bg: #121518;
+    --bg-raised: #1c2024;
+    --ink: #f4f1ea;
+    --ink-dim: #9aa5ad;
+    --hair: #2e353b;
+    --teal: #638b9e;
+    --header-bg: rgba(28, 32, 36, 0.92);
+    --header-text: #f4f1ea;
   }
 
   * { 
@@ -34,6 +50,7 @@
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection { 
@@ -81,11 +98,12 @@
     justify-content: space-between; 
     align-items: center;
     padding: 16px clamp(20px, 5vw, 56px);
-    background: rgba(66, 100, 117, 0.92);
+    background: var(--header-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(244, 241, 234, 0.2);
-    color: #f4f1ea;
+    border-bottom: 1px solid rgba(244, 241, 234, 0.15);
+    color: var(--header-text);
+    transition: background-color 0.3s ease;
   }
 
   .brand-switch {
@@ -94,7 +112,7 @@
     font-weight: 600;
     font-size: 15px;
     letter-spacing: -0.01em;
-    color: #f4f1ea;
+    color: var(--header-text);
     height: 26px;
     min-width: 290px;
     overflow: visible; 
@@ -114,7 +132,7 @@
     left: 0;
     opacity: 0;
     transform: translateY(100%);
-    color: #f4f1ea;
+    color: var(--header-text);
     font-size: 11.5px;
     font-weight: 500;
     font-family: 'IBM Plex Mono', monospace;
@@ -239,6 +257,7 @@
     background: var(--bg-raised);
     border-radius: 4px;
     margin: 16px 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .viewport-container::before,
@@ -294,7 +313,7 @@
     overflow: hidden;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity .7s cubic-bezier(0.16, 1, 0.3, 1), transform .3s ease, box-shadow .3s ease;
+    transition: opacity .7s cubic-bezier(0.16, 1, 0.3, 1), transform .3s ease, box-shadow .3s ease, background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .work-card.in-view {
@@ -304,7 +323,7 @@
 
   .work-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     border-color: var(--teal);
   }
 
@@ -412,7 +431,7 @@
     object-fit: cover;
     border: 2px solid var(--hair);
     filter: grayscale(15%);
-    transition: filter 0.3s ease;
+    transition: filter 0.3s ease, border-color 0.3s ease;
   }
 
   .about-avatar:hover {
@@ -438,6 +457,7 @@
     border-radius: 4px; 
     padding: 24px;
     margin-top: 28px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .media-pool-head {
@@ -566,6 +586,52 @@
   .comp-reel-cta.is-comp .comp-reel-arrow {
     order: -1;
     animation: nudge-left 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  /* ---------- FLOATING THEME TOGGLE BUTTON ---------- */
+  .theme-toggle-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 99;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-raised);
+    border: 1px solid var(--hair);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .theme-toggle-btn:hover {
+    transform: scale(1.08);
+  }
+
+  .theme-toggle-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sun-icon {
+    display: none;
+  }
+
+  [data-theme="dark"] .moon-icon {
+    display: none;
+  }
+
+  [data-theme="dark"] .sun-icon {
+    display: block;
   }
 
   @keyframes nudge-right {
@@ -748,10 +814,50 @@
   <span class="mono">BUILT FRAME BY FRAME</span>
 </footer>
 
+<!-- FLOATING NIGHT/DAY MODE TOGGLE BUTTON -->
+<button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Night Mode">
+  <!-- Moon Icon (Shown in Light Mode) -->
+  <svg class="moon-icon" viewBox="0 0 24 24">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+  <!-- Sun Icon (Shown in Dark Mode) -->
+  <svg class="sun-icon" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+</button>
+
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 1. DYNAMIC REEL SWITCHER ---
+    // --- 1. NIGHT MODE TOGGLE ---
+    const themeBtn = document.getElementById('theme-toggle');
+    
+    // Check saved theme in localStorage or default to light
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // --- 2. DYNAMIC REEL SWITCHER ---
     const reelIframe = document.getElementById('main-reel-iframe');
     const reelBtn = document.getElementById('reel-toggle-btn');
     const reelText = document.getElementById('reel-toggle-text');
@@ -790,7 +896,7 @@
 
     reelBtn.addEventListener('click', handleReelToggle);
 
-    // --- 2. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
+    // --- 3. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
 
@@ -811,7 +917,7 @@
 
     sections.forEach(sec => sectionObserver.observe(sec));
 
-    // --- 3. REVEAL WORK CARDS ---
+    // --- 4. REVEAL WORK CARDS ---
     const workCards = document.querySelectorAll('.work-card');
 
     const ioCards = new IntersectionObserver((entries) => {
