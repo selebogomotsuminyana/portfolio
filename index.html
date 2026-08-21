@@ -169,10 +169,6 @@
     transform: scale(1.05);
   }
 
-  .nav-links a.active {
-    color: #f4f1ea;
-  }
-
   /* ---------- THEME TOGGLE (DESKTOP CENTER & MOBILE DROPDOWN) ---------- */
   .header-theme-center {
     position: absolute;
@@ -1043,63 +1039,27 @@
 
     reelBtn.addEventListener('click', handleReelToggle);
 
-    // --- 4. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
-    const sections = document.querySelectorAll('section[id]');
-
-    const setActiveNav = (id) => {
-      navAnchors.forEach(link => {
-        if (link.getAttribute('href') === `#${id}`) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
-      });
-    };
-
-    const handleScrollHighlight = () => {
-      const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
-      if (isAtBottom) {
-        setActiveNav('contact');
-      }
-    };
-
-    const sectionObserver = new IntersectionObserver((entries) => {
-      const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
-      if (isAtBottom) {
-        setActiveNav('contact');
-        return;
-      }
-
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
-          setActiveNav(id);
-        }
-      });
-    }, { rootMargin: '-20% 0px -20% 0px', threshold: 0 });
-
-    sections.forEach(sec => sectionObserver.observe(sec));
-    window.addEventListener('scroll', handleScrollHighlight, { passive: true });
-
-    // --- 5. FADE OUT DESKTOP DARK MODE ICON AT ~1/4 INTO WORK SECTION ---
+    // --- 4. PERSISTENT DARK MODE ICON HIDING PAST WORK SECTION ---
     const desktopThemeWrapper = document.getElementById('desktop-theme-wrapper');
     const workSection = document.getElementById('work');
 
-    if (desktopThemeWrapper && workSection) {
-      const workObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            desktopThemeWrapper.classList.add('fade-out');
-          } else {
-            desktopThemeWrapper.classList.remove('fade-out');
-          }
-        });
-      }, { rootMargin: '-25% 0px 0px 0px', threshold: 0 });
+    const handleThemeIconVisibility = () => {
+      if (!desktopThemeWrapper || !workSection) return;
+      
+      const workTop = workSection.offsetTop;
+      const triggerPoint = workTop + (workSection.offsetHeight * 0.25);
+      
+      if (window.scrollY >= triggerPoint) {
+        desktopThemeWrapper.classList.add('fade-out');
+      } else {
+        desktopThemeWrapper.classList.remove('fade-out');
+      }
+    };
 
-      workObserver.observe(workSection);
-    }
+    window.addEventListener('scroll', handleThemeIconVisibility, { passive: true });
+    handleThemeIconVisibility();
 
-    // --- 6. REVEAL WORK CARDS ---
+    // --- 5. REVEAL WORK CARDS ---
     const workCards = document.querySelectorAll('.work-card');
 
     const ioCards = new IntersectionObserver((entries) => {
