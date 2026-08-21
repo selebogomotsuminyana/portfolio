@@ -31,7 +31,7 @@
     --ink-dim: #9aa5ad;
     --hair: #2e353b;
     --teal: #638b9e;
-    --header-bg: rgba(99, 139, 158, 0.92); /* Updated to match dark mode footer teal */
+    --header-bg: rgba(99, 139, 158, 0.92);
     --header-text: #f4f1ea;
   }
 
@@ -837,14 +837,12 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 1. NIGHT MODE TOGGLE ---
+    // --- 1. NIGHT MODE TOGGLE (STARTS IN LIGHT MODE) ---
     const themeBtn = document.getElementById('theme-toggle');
     
-    // Check saved theme in localStorage or default to light
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    }
+    // Ensure default load is always light mode
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('theme', 'light');
 
     themeBtn.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
