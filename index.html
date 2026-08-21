@@ -940,6 +940,18 @@
       });
     });
 
+    // Close menu when clicking outside of nav-links and hamburger-btn
+    document.addEventListener('click', (e) => {
+      if (
+        navLinks.classList.contains('active') &&
+        !navLinks.contains(e.target) &&
+        !hamburgerBtn.contains(e.target)
+      ) {
+        hamburgerBtn.classList.remove('open');
+        navLinks.classList.remove('active');
+      }
+    });
+
     // --- 3. DYNAMIC REEL SWITCHER ---
     const reelIframe = document.getElementById('main-reel-iframe');
     const reelBtn = document.getElementById('reel-toggle-btn');
