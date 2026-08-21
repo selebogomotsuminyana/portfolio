@@ -265,7 +265,7 @@
     overflow: hidden;
   }
 
-  .reel-frame iframe, .reel-frame video {
+  .reel-frame iframe {
     position: absolute; 
     inset: 0; 
     width: 100%; 
@@ -316,12 +316,9 @@
     overflow: hidden;
   }
 
-  .work-media video,
-  .work-media img,
   .work-media iframe {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     border: 0;
   }
 
@@ -345,11 +342,6 @@
     margin: 0;
     font-weight: 600;
     font-family: 'Space Grotesk', sans-serif;
-  }
-
-  .work-filename {
-    font-size: 10.5px;
-    color: var(--teal);
   }
 
   .work-desc {
@@ -438,11 +430,6 @@
     line-height: 1.7; 
     color: var(--ink-dim); 
     margin: 0; 
-  }
-
-  .about-text strong { 
-    color: var(--ink); 
-    font-weight: 600; 
   }
 
   .media-pool {
@@ -537,12 +524,7 @@
     font-size: 10.5px;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-    .work-card { opacity: 1; transform: none; }
-  }
-
-  /* ---------- COMPOSITING REEL CTA ---------- */
+  /* ---------- REEL SWITCH CTA ---------- */
   .comp-reel-cta {
     display: flex;
     align-items: center;
@@ -553,6 +535,10 @@
     color: var(--teal);
     font-size: 12px;
     font-weight: 500;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
   }
 
   .comp-reel-cta:hover {
@@ -569,14 +555,28 @@
     animation: nudge-right 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 
+  /* Switched State: Places arrow on left, flips graphic horizontally, moves left by 15px */
+  .comp-reel-cta.is-comp .comp-reel-arrow {
+    order: -1;
+    animation: nudge-left 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
   @keyframes nudge-right {
     0%   { transform: translateX(0); }
     50%  { transform: translateX(15px); }
     100% { transform: translateX(0); }
   }
 
+  @keyframes nudge-left {
+    0%   { transform: scaleX(-1) translateX(0); }
+    50%  { transform: scaleX(-1) translateX(15px); }
+    100% { transform: scaleX(-1) translateX(0); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .comp-reel-arrow { animation: none; }
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .work-card { opacity: 1; transform: none; }
+    .comp-reel-arrow { animation: none !important; }
   }
 </style>
 </head>
@@ -609,16 +609,16 @@
 <section id="reel">
   <div class="viewport-container">
     <div class="reel-frame">
-      <iframe src="https://player.vimeo.com/video/1170714667" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Motion Graphics Reel" loading="lazy"></iframe>
+      <iframe id="main-reel-iframe" src="https://player.vimeo.com/video/1170714667" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Motion Graphics Reel" loading="lazy"></iframe>
     </div>
   </div>
-  <a href="https://vimeo.com/1167104355?fl=ip&amp;fe=ec" target="_blank" rel="noopener" class="comp-reel-cta mono">
-    <span>Compositing Reel</span>
+  <button type="button" id="reel-toggle-btn" class="comp-reel-cta mono">
+    <span id="reel-toggle-text">Compositing Reel</span>
     <svg class="comp-reel-arrow" width="20" height="14" viewBox="0 0 20 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M1 7h16"></path>
       <path d="M12 1l6 6-6 6"></path>
     </svg>
-  </a>
+  </button>
 </section>
 
 <section id="work">
@@ -631,7 +631,7 @@
     <!-- Nivea (First) -->
     <div class="work-card">
       <div class="work-media">
-        <iframe src="https://www.youtube-nocookie.com/embed/gpt_WUBv0ZA" title="Nivea" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <iframe src="https://www.youtube.com/embed/gpt_WUBv0ZA?rel=0" title="Nivea" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
       </div>
       <div class="work-content">
         <div class="work-header-row">
@@ -661,7 +661,7 @@
     <!-- Woolworths -->
     <div class="work-card">
       <div class="work-media">
-        <iframe src="https://www.youtube-nocookie.com/embed/VpuIx_WJIVM" title="Woolworths" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <iframe src="https://www.youtube.com/embed/VpuIx_WJIVM?rel=0" title="Woolworths" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
       </div>
       <div class="work-content">
         <div class="work-header-row">
@@ -744,7 +744,43 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 1. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
+    // --- 1. DYNAMIC REEL SWITCHER ---
+    const reelIframe = document.getElementById('main-reel-iframe');
+    const reelBtn = document.getElementById('reel-toggle-btn');
+    const reelText = document.getElementById('reel-toggle-text');
+
+    const reelData = {
+      motion: {
+        src: "https://player.vimeo.com/video/1170714667",
+        title: "Motion Graphics Reel",
+        btnText: "Compositing Reel"
+      },
+      comp: {
+        src: "https://player.vimeo.com/video/1167104355",
+        title: "Compositing Reel",
+        btnText: "Motion Graphics Reel"
+      }
+    };
+
+    let activeReel = 'motion';
+
+    reelBtn.addEventListener('click', () => {
+      if (activeReel === 'motion') {
+        activeReel = 'comp';
+        reelIframe.src = reelData.comp.src;
+        reelIframe.title = reelData.comp.title;
+        reelText.textContent = reelData.comp.btnText;
+        reelBtn.classList.add('is-comp');
+      } else {
+        activeReel = 'motion';
+        reelIframe.src = reelData.motion.src;
+        reelIframe.title = reelData.motion.title;
+        reelText.textContent = reelData.motion.btnText;
+        reelBtn.classList.remove('is-comp');
+      }
+    });
+
+    // --- 2. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
 
@@ -765,9 +801,8 @@
 
     sections.forEach(sec => sectionObserver.observe(sec));
 
-    // --- 2. REVEAL WORK CARDS & LAZY LOAD VIDEOS ---
+    // --- 3. REVEAL WORK CARDS ---
     const workCards = document.querySelectorAll('.work-card');
-    const lazyVideos = document.querySelectorAll('video[data-src]');
 
     const ioCards = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -778,19 +813,6 @@
       });
     }, { threshold: 0.15 });
     workCards.forEach(c => ioCards.observe(c));
-
-    const ioVideos = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const v = e.target;
-          if (v.dataset.src) v.src = v.dataset.src;
-          if (v.dataset.poster) v.poster = v.dataset.poster;
-          v.load();
-          ioVideos.unobserve(v);
-        }
-      });
-    }, { rootMargin: '0px 0px 300px 0px' });
-    lazyVideos.forEach(v => ioVideos.observe(v));
 
   });
 </script>
