@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selebogo Motsuminyana — Motion Designer & Compositor</title>
+<meta name="description" content="Motion design and compositing portfolio — Selebogo Motsuminyana, Johannesburg. After Effects, Blender, DaVinci Resolve Fusion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --bg-raised: #e9e4da;
+    --ink: #22262a;
+    --ink-dim: #636e75;
+    --hair: #d6d0c4;
+    --teal: #426475;
+    --maxw: 1200px;
+  }
+
+  * { 
+    box-sizing: border-box; 
+  }
+
+  html { 
+    scroll-behavior: smooth; 
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { 
+    background: var(--teal); 
+    color: #f4f1ea; 
+  }
+
+  a { 
+    color: inherit; 
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+  }
+
+  .mono { 
+    font-family: 'IBM Plex Mono', monospace; 
+    letter-spacing: 0.02em; 
+  }
+
+  .display { 
+    font-family: 'Space Grotesk', sans-serif; 
+  }
+
+  .grain {
+    position: fixed; 
+    inset: 0; 
+    pointer-events: none; 
+    z-index: 5;
+    opacity: 0.035; 
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- FLOATING PINNED HEADER ---------- */
+  header {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    z-index: 100;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 16px clamp(20px, 5vw, 56px);
+    background: rgba(66, 100, 117, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(244, 241, 234, 0.2);
+    color: #f4f1ea;
+  }
+
+  .brand-switch {
+    position: relative;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: #f4f1ea;
+    height: 26px;
+    min-width: 290px;
+    overflow: visible; 
+    display: flex;
+    align-items: center;
+  }
+
+  .brand-switch span {
+    display: block;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .brand-switch .sub {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateY(100%);
+    color: #f4f1ea;
+    font-size: 11.5px;
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .brand-switch:hover span:first-child {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  .brand-switch:hover .sub {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(244, 241, 234, 0.75);
+  }
+
+  .nav-links a {
+    color: inherit;
+    display: inline-block;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    color: #f4f1ea;
+    transform: scale(1.05);
+  }
+
+  .nav-links a.active {
+    color: #f4f1ea;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { gap: 14px; font-size: 10.5px; }
+    .brand-switch { min-width: 190px; font-size: 13px; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    text-align: center;
+    padding: 96px clamp(20px, 5vw, 56px) 10px;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-size: clamp(34px, 5.5vw, 64px);
+    line-height: 1.1;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .hero-greeting {
+    margin-top: 10px;
+    font-size: clamp(14px, 1.4vw, 16px);
+    color: var(--ink-dim);
+    font-weight: 500;
+  }
+
+  .workspace-hud {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 24px;
+    font-size: 11px;
+    color: var(--teal);
+    border-top: 1px dashed var(--hair);
+    border-bottom: 1px dashed var(--hair);
+    padding: 8px 16px;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section {
+    padding: 45px clamp(20px, 5vw, 56px);
+    max-width: var(--maxw);
+    margin: 0 auto;
+    scroll-margin-top: 70px;
+  }
+
+  .section-head {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-end;
+    margin-bottom: 24px; 
+    gap: 24px; 
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--hair);
+    padding-bottom: 12px;
+  }
+
+  .section-head h2 {
+    font-size: clamp(22px, 2.8vw, 32px); 
+    margin: 0; 
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- REEL ---------- */
+  #reel {
+    padding-top: 25px;
+    max-width: 1056px;
+    margin: 0 auto;
+  }
+
+  .viewport-container {
+    position: relative;
+    border: 1px solid var(--ink);
+    padding: 4px;
+    background: var(--bg-raised);
+    border-radius: 4px;
+    margin: 16px 0;
+  }
+
+  .viewport-container::before,
+  .viewport-container::after {
+    content: "+";
+    position: absolute;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1;
+    z-index: 10;
+  }
+
+  .viewport-container::before { top: -16px; left: -16px; }
+  .viewport-container::after { bottom: -16px; right: -16px; }
+
+  .reel-frame {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--bg-raised);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .reel-frame iframe, .reel-frame video {
+    position: absolute; 
+    inset: 0; 
+    width: 100%; 
+    height: 100%; 
+    border: 0; 
+    object-fit: cover;
+  }
+
+  /* ---------- WORK / 2X2 GRID CARDS ---------- */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  @media (min-width: 768px) {
+    .work-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .work-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--hair);
+    border-radius: 4px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .7s cubic-bezier(0.16, 1, 0.3, 1), transform .3s ease, box-shadow .3s ease;
+  }
+
+  .work-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .work-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    border-color: var(--teal);
+  }
+
+  .work-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #121518;
+    overflow: hidden;
+  }
+
+  .work-media video,
+  .work-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .work-content {
+    padding: 24px clamp(18px, 2.5vw, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .work-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .work-content h3 {
+    font-size: clamp(18px, 2.2vw, 24px);
+    margin: 0;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .work-filename {
+    font-size: 10.5px;
+    color: var(--teal);
+  }
+
+  .work-desc {
+    color: var(--ink-dim);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .project-meta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .tags { 
+    display: flex; 
+    gap: 6px; 
+    flex-wrap: wrap; 
+  }
+
+  .tag {
+    font-size: 10px; 
+    padding: 3px 8px; 
+    border-radius: 2px;
+  }
+
+  .tag-skill {
+    background: var(--ink);
+    color: var(--bg);
+    border: 1px solid var(--ink);
+  }
+
+  .tag-software {
+    background: var(--teal);
+    color: #f4f1ea;
+    border: 1px solid var(--teal);
+  }
+
+  /* ---------- ABOUT ME ---------- */
+  .about-grid {
+    display: grid; 
+    grid-template-columns: 1fr 1.2fr; 
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 820px) { 
+    .about-grid { grid-template-columns: 1fr; } 
+  }
+
+  .about-avatar-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .about-avatar {
+    width: clamp(220px, 26vw, 300px);
+    aspect-ratio: 1;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--hair);
+    filter: grayscale(15%);
+    transition: filter 0.3s ease;
+  }
+
+  .about-avatar:hover {
+    filter: grayscale(0%);
+  }
+
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .about-text p { 
+    font-size: 15px; 
+    line-height: 1.7; 
+    color: var(--ink-dim); 
+    margin: 0; 
+  }
+
+  .about-text strong { 
+    color: var(--ink); 
+    font-weight: 600; 
+  }
+
+  .media-pool {
+    background: var(--bg-raised); 
+    border: 1px solid var(--hair); 
+    border-radius: 4px; 
+    padding: 24px;
+    margin-top: 28px;
+  }
+
+  .media-pool-head {
+    font-size: 10.5px; 
+    color: var(--ink-dim); 
+    margin-bottom: 14px;
+    display: flex; 
+    justify-content: space-between; 
+    border-bottom: 1px solid var(--hair); 
+    padding-bottom: 10px;
+  }
+
+  .media-pool-row {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 8px 0; 
+    border-bottom: 1px solid var(--hair); 
+    font-size: 13px;
+  }
+
+  .media-pool-row:last-child { 
+    border-bottom: none; 
+  }
+
+  .media-pool-row .role { 
+    color: var(--ink-dim); 
+    font-size: 11px; 
+  }
+
+  /* ---------- CONTACT / END CREDITS ---------- */
+  .end-credits {
+    text-align: center; 
+    padding-top: 30px; 
+    padding-bottom: 80px;
+  }
+
+  .end-credits .tc-out { 
+    font-size: 11px; 
+    color: var(--ink-dim); 
+    margin-bottom: 20px; 
+  }
+
+  .end-credits h2 {
+    font-size: clamp(30px, 5vw, 56px); 
+    margin: 0 0 24px 0; 
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-links {
+    display: flex; 
+    justify-content: center; 
+    gap: 32px; 
+    flex-wrap: wrap; 
+    margin-top: 10px;
+  }
+
+  .contact-links a {
+    text-decoration: none; 
+    font-size: 14px; 
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--hair); 
+    transition: border-color .2s, color .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .contact-links a:hover { 
+    border-color: var(--teal); 
+    color: var(--teal); 
+  }
+
+  /* ---------- TEAL FOOTER ---------- */
+  footer {
+    background: var(--teal);
+    color: #f4f1ea;
+    border-top: 1px solid rgba(244, 241, 234, 0.2);
+    padding: 20px clamp(20px, 5vw, 56px);
+    display: flex; 
+    justify-content: space-between; 
+    font-size: 10.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .work-card { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header>
+  <a href="#" class="brand-switch">
+    <span>Selebogo Motsuminyana</span>
+    <span class="sub mono">Motion Designer &amp; Compositor</span>
+  </a>
+  <nav class="nav-links mono">
+    <a href="#">REEL</a>
+    <a href="#work">WORK</a>
+    <a href="#about">ABOUT</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1 class="display">I Make Things Move.</h1>
+  <p class="hero-greeting">Motion Designer &amp; Compositor</p>
+  <div class="workspace-hud mono">
+    <span>[LOC: GAUTENG, ZA]</span>
+    <span>[STATUS: AVAILABLE FOR WORK]</span>
+  </div>
+</section>
+
+<section id="reel">
+  <div class="viewport-container">
+    <div class="reel-frame">
+      <iframe src="https://player.vimeo.com/video/1170714667" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Motion Graphics Reel" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="section-head">
+    <h2 class="display">Work</h2>
+    <span class="mono" style="font-size: 11px; color: var(--ink-dim);">[01 — 03]</span>
+  </div>
+
+  <div class="work-grid">
+    <!-- Nivea (First) -->
+    <div class="work-card">
+      <div class="work-media">
+        <video data-src="media/nivea.mp4" data-poster="media/nivea_poster.jpg" preload="none" controls playsinline></video>
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>Nivea</h3>
+        </div>
+        <p class="work-desc">Self-directed creative work exploring product-led storytelling and clean graphic branding — designed as a portfolio cornerstone for agency-facing campaigns.</p>
+        
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">3D Modelling</span>
+            <span class="tag tag-skill">Lighting &amp; Rendering</span>
+            <span class="tag tag-skill">Motion Design</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Blender</span>
+            <span class="tag tag-software">Davinci Resolve</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Woolworths -->
+    <div class="work-card">
+      <div class="work-media">
+        <video data-src="media/mojito.mp4" data-poster="media/mojito_poster.jpg" preload="none" controls playsinline></video>
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>Woolworths</h3>
+        </div>
+        <p class="work-desc">Self-directed spec piece acting as the lead shot on the reel. A close-up liquid and ice simulation built to sit alongside real FMCG campaign work.</p>
+        
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">Motion Design</span>
+            <span class="tag tag-skill">Kinetic Typography</span>
+            <span class="tag tag-skill">Storyboarding</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Davinci Resolve</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KFC -->
+    <div class="work-card">
+      <div class="work-media">
+        <video data-src="media/kfc.mp4" data-poster="media/kfc_poster.jpg" preload="none" controls playsinline></video>
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>KFC</h3>
+        </div>
+        <p class="work-desc">Multi-format delivery for a fast-moving brand campaign — robust compositing and cleanup work built to hold up across high-impact commercial placements.</p>
+        
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">CG Compositing</span>
+            <span class="tag tag-skill">Kinetic Typography</span>
+            <span class="tag tag-skill">2D effects</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Nuke</span>
+            <span class="tag tag-software">Davinci Resolve</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-head">
+    <h2 class="display">About Me</h2>
+    <span class="mono" style="font-size: 11px; color: var(--ink-dim);">[PROFILE]</span>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-avatar-wrap">
+      <img src="Selebogo Motsuminyana.png" alt="Selebogo Motsuminyana" class="about-avatar">
+    </div>
+
+    <div class="about-text">
+      <p>I’m a Motion Designer and Compositor with experience across 2D motion design, 3D product visualisation and VFX compositing.</p>
+      <p>I enjoy taking ideas from a rough concept to a polished final piece, whether that means building a product in 3D, bringing typography to life, or making a shot feel like it belongs in the real world.</p>
+      <p>I’m comfortable working independently or as part of a team, and I’m used to adapting to different creative workflows and tight deadlines. My background in compositing also means I tend to obsess over the little details that make a piece feel finished.</p>
+      <p>I’m always looking for interesting briefs, good ideas and new things to make.</p>
+    </div>
+  </div>
+
+  <div class="media-pool">
+    <div class="media-pool-head mono"><span>SOFTWARE &amp; SKILLS</span><span>EXPERTISE</span></div>
+    <div class="media-pool-row"><span>After Effects</span><span class="role mono">2D and 3D Motion Design</span></div>
+    <div class="media-pool-row"><span>Blender</span><span class="role mono">3D asset modelling &amp; texturing</span></div>
+    <div class="media-pool-row"><span>Fusion &amp; Davinci Resolve</span><span class="role mono">2D &amp; 3D Compositing</span></div>
+    <div class="media-pool-row"><span>Nuke</span><span class="role mono">2D &amp; 3D Compositing</span></div>
+    <div class="media-pool-row"><span>Premiere Pro</span><span class="role mono">Editorial Workflow</span></div>
+    <div class="media-pool-row"><span>Photoshop</span><span class="role mono">Image Design</span></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="end-credits">
+    <div class="tc-out mono">LET'S BUILD SOMETHING TOGETHER</div>
+    <h2>Contact</h2>
+    <div class="contact-links mono">
+      <a href="mailto:selebogo30@gmail.com">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        selebogo30@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/selebogo" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--teal)"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="mono">© 2026 SELEBOGO MOTSUMINYANA</span>
+  <span class="mono">BUILT FRAME BY FRAME</span>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- 1. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -50% 0px', threshold: 0 });
+
+    sections.forEach(sec => sectionObserver.observe(sec));
+
+    // --- 2. REVEAL WORK CARDS & LAZY LOAD VIDEOS ---
+    const workCards = document.querySelectorAll('.work-card');
+    const lazyVideos = document.querySelectorAll('video[data-src]');
+
+    const ioCards = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { 
+          e.target.classList.add('in-view'); 
+          ioCards.unobserve(e.target); 
+        }
+      });
+    }, { threshold: 0.15 });
+    workCards.forEach(c => ioCards.observe(c));
+
+    const ioVideos = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const v = e.target;
+          if (v.dataset.src) v.src = v.dataset.src;
+          if (v.dataset.poster) v.poster = v.dataset.poster;
+          v.load();
+          ioVideos.unobserve(v);
+        }
+      });
+    }, { rootMargin: '0px 0px 300px 0px' });
+    lazyVideos.forEach(v => ioVideos.observe(v));
+
+  });
+</script>
+
+</body>
+</html>
