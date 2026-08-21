@@ -317,10 +317,12 @@
   }
 
   .work-media video,
-  .work-media img {
+  .work-media img,
+  .work-media iframe {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border: 0;
   }
 
   .work-content {
@@ -539,6 +541,43 @@
     * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
     .work-card { opacity: 1; transform: none; }
   }
+
+  /* ---------- COMPOSITING REEL CTA ---------- */
+  .comp-reel-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 18px auto 0;
+    width: fit-content;
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .comp-reel-cta:hover {
+    color: var(--ink);
+  }
+
+  .comp-reel-cta:hover .comp-reel-arrow {
+    stroke: var(--ink);
+  }
+
+  .comp-reel-arrow {
+    stroke: var(--teal);
+    transition: stroke 0.2s ease;
+    animation: nudge-right 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  @keyframes nudge-right {
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(15px); }
+    100% { transform: translateX(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .comp-reel-arrow { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -573,19 +612,26 @@
       <iframe src="https://player.vimeo.com/video/1170714667" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Motion Graphics Reel" loading="lazy"></iframe>
     </div>
   </div>
+  <a href="https://vimeo.com/1167104355?fl=ip&amp;fe=ec" target="_blank" rel="noopener" class="comp-reel-cta mono">
+    <span>Compositing Reel</span>
+    <svg class="comp-reel-arrow" width="20" height="14" viewBox="0 0 20 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 7h16"></path>
+      <path d="M12 1l6 6-6 6"></path>
+    </svg>
+  </a>
 </section>
 
 <section id="work">
   <div class="section-head">
     <h2 class="display">Work</h2>
-    <span class="mono" style="font-size: 11px; color: var(--ink-dim);">[01 — 03]</span>
+    <span class="mono" style="font-size: 11px; color: var(--ink-dim);">[01 — 02]</span>
   </div>
 
   <div class="work-grid">
     <!-- Nivea (First) -->
     <div class="work-card">
       <div class="work-media">
-        <video data-src="media/nivea.mp4" data-poster="media/nivea_poster.jpg" preload="none" controls playsinline></video>
+        <iframe src="https://www.youtube-nocookie.com/embed/gpt_WUBv0ZA" title="Nivea" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
       </div>
       <div class="work-content">
         <div class="work-header-row">
@@ -615,7 +661,7 @@
     <!-- Woolworths -->
     <div class="work-card">
       <div class="work-media">
-        <video data-src="media/mojito.mp4" data-poster="media/mojito_poster.jpg" preload="none" controls playsinline></video>
+        <iframe src="https://www.youtube-nocookie.com/embed/VpuIx_WJIVM" title="Woolworths" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
       </div>
       <div class="work-content">
         <div class="work-header-row">
@@ -635,36 +681,6 @@
         <div class="project-meta-group">
           <span class="meta-label mono">Software</span>
           <div class="tags mono">
-            <span class="tag tag-software">Davinci Resolve</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- KFC -->
-    <div class="work-card">
-      <div class="work-media">
-        <video data-src="media/kfc.mp4" data-poster="media/kfc_poster.jpg" preload="none" controls playsinline></video>
-      </div>
-      <div class="work-content">
-        <div class="work-header-row">
-          <h3>KFC</h3>
-        </div>
-        <p class="work-desc">Multi-format delivery for a fast-moving brand campaign — robust compositing and cleanup work built to hold up across high-impact commercial placements.</p>
-        
-        <div class="project-meta-group">
-          <span class="meta-label mono">Skills</span>
-          <div class="tags mono">
-            <span class="tag tag-skill">CG Compositing</span>
-            <span class="tag tag-skill">Kinetic Typography</span>
-            <span class="tag tag-skill">2D effects</span>
-          </div>
-        </div>
-
-        <div class="project-meta-group">
-          <span class="meta-label mono">Software</span>
-          <div class="tags mono">
-            <span class="tag tag-software">Nuke</span>
             <span class="tag tag-software">Davinci Resolve</span>
           </div>
         </div>
