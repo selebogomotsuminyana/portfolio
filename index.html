@@ -181,6 +181,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header-theme-center.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .theme-toggle-btn {
@@ -278,6 +287,11 @@
       display: flex;
     }
 
+    .mobile-theme-item .theme-toggle-btn svg {
+      width: 14.4px;
+      height: 14.4px;
+    }
+
     .hamburger {
       display: flex;
     }
@@ -287,7 +301,7 @@
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--header-bg-solid); /* Fully opaque */
+      background: var(--header-bg-solid);
       flex-direction: column;
       gap: 0;
       border-bottom: 1px solid rgba(244, 241, 234, 0.15);
@@ -755,7 +769,7 @@
   </a>
 
   <!-- Centered Desktop Theme Toggle -->
-  <div class="header-theme-center">
+  <div class="header-theme-center" id="desktop-theme-wrapper">
     <button type="button" class="theme-toggle-btn theme-btn" aria-label="Toggle Dark Mode">
       <svg class="moon-icon" viewBox="0 0 24 24">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -1032,24 +1046,60 @@
     // --- 4. ACCURATE SCROLL SPY FOR NAV HIGHLIGHT ---
     const sections = document.querySelectorAll('section[id]');
 
+    const setActiveNav = (id) => {
+      navAnchors.forEach(link => {
+        if (link.getAttribute('href') === `#${id}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    };
+
+    const handleScrollHighlight = () => {
+      const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+      if (isAtBottom) {
+        setActiveNav('contact');
+      }
+    };
+
     const sectionObserver = new IntersectionObserver((entries) => {
+      const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+      if (isAtBottom) {
+        setActiveNav('contact');
+        return;
+      }
+
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const id = entry.target.getAttribute('id');
-          navAnchors.forEach(link => {
-            if (link.getAttribute('href') === `#${id}`) {
-              link.classList.add('active');
-            } else {
-              link.classList.remove('active');
-            }
-          });
+          setActiveNav(id);
         }
       });
-    }, { rootMargin: '-30% 0px -50% 0px', threshold: 0 });
+    }, { rootMargin: '-20% 0px -20% 0px', threshold: 0 });
 
     sections.forEach(sec => sectionObserver.observe(sec));
+    window.addEventListener('scroll', handleScrollHighlight, { passive: true });
 
-    // --- 5. REVEAL WORK CARDS ---
+    // --- 5. FADE OUT DESKTOP DARK MODE ICON AT ~1/4 INTO WORK SECTION ---
+    const desktopThemeWrapper = document.getElementById('desktop-theme-wrapper');
+    const workSection = document.getElementById('work');
+
+    if (desktopThemeWrapper && workSection) {
+      const workObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            desktopThemeWrapper.classList.add('fade-out');
+          } else {
+            desktopThemeWrapper.classList.remove('fade-out');
+          }
+        });
+      }, { rootMargin: '-25% 0px 0px 0px', threshold: 0 });
+
+      workObserver.observe(workSection);
+    }
+
+    // --- 6. REVEAL WORK CARDS ---
     const workCards = document.querySelectorAll('.work-card');
 
     const ioCards = new IntersectionObserver((entries) => {
