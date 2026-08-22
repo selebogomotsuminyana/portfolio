@@ -456,7 +456,7 @@
     border-color: var(--teal);
   }
 
-  /* CLEAN THUMBNAIL COVERAGE (NO YOUTUBE OVERLAYS ON UNEXPANDED CARDS) */
+  /* CLEAN THUMBNAIL COVERAGE */
   .work-media {
     position: relative;
     width: 100%;
@@ -475,38 +475,6 @@
 
   .work-card:hover .work-media img {
     transform: scale(1.04);
-  }
-
-  /* PLAY ICON OVERLAY ON HOVER */
-  .play-badge {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
-    width: 52px;
-    height: 52px;
-    background: rgba(34, 38, 42, 0.75);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(244, 241, 234, 0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.85;
-    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
-  }
-
-  .play-badge svg {
-    width: 20px;
-    height: 20px;
-    fill: #f4f1ea;
-    margin-left: 2px;
-  }
-
-  .work-card:hover .play-badge {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 1;
-    background: var(--teal);
   }
 
   .work-content {
@@ -958,9 +926,6 @@
          data-desc="Self-directed creative work exploring product-led storytelling and clean graphic branding — designed as a portfolio cornerstone for agency-facing campaigns.">
       <div class="work-media">
         <img src="https://img.youtube.com/vi/VpuIx_WJIVM/maxresdefault.jpg" alt="Nivea Project Thumbnail" loading="lazy">
-        <div class="play-badge">
-          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-        </div>
       </div>
       <div class="work-content">
         <div class="work-header-row">
@@ -994,9 +959,6 @@
          data-desc="Self-directed spec piece acting as the lead shot on the reel. Ensuring the drink is appetising, the pace is quick and fun and that it matches the woolworths CI.">
       <div class="work-media">
         <img src="https://img.youtube.com/vi/gpt_WUBv0ZA/maxresdefault.jpg" alt="Woolworths Project Thumbnail" loading="lazy">
-        <div class="play-badge">
-          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-        </div>
       </div>
       <div class="work-content">
         <div class="work-header-row">
