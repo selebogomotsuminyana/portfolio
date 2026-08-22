@@ -210,7 +210,6 @@
     font-size: 9px;
     color: rgba(244, 241, 234, 0.75);
     
-    /* Smooth Accordion Slide Transition */
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -457,19 +456,57 @@
     border-color: var(--teal);
   }
 
+  /* CLEAN THUMBNAIL COVERAGE (NO YOUTUBE OVERLAYS ON UNEXPANDED CARDS) */
   .work-media {
     position: relative;
     width: 100%;
     aspect-ratio: 16/9;
     background: #121518;
     overflow: hidden;
-    pointer-events: none;
   }
 
-  .work-media iframe {
+  .work-media img {
     width: 100%;
     height: 100%;
-    border: 0;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .work-card:hover .work-media img {
+    transform: scale(1.04);
+  }
+
+  /* PLAY ICON OVERLAY ON HOVER */
+  .play-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 52px;
+    height: 52px;
+    background: rgba(34, 38, 42, 0.75);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(244, 241, 234, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+  }
+
+  .play-badge svg {
+    width: 20px;
+    height: 20px;
+    fill: #f4f1ea;
+    margin-left: 2px;
+  }
+
+  .work-card:hover .play-badge {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+    background: var(--teal);
   }
 
   .work-content {
@@ -917,10 +954,13 @@
     <div class="work-card" 
          data-title="Nivea" 
          data-year="2026" 
-         data-video="https://www.youtube.com/embed/VpuIx_WJIVM?rel=0&autoplay=1" 
+         data-video-id="VpuIx_WJIVM" 
          data-desc="Self-directed creative work exploring product-led storytelling and clean graphic branding — designed as a portfolio cornerstone for agency-facing campaigns.">
       <div class="work-media">
-        <iframe src="https://www.youtube.com/embed/VpuIx_WJIVM?rel=0" title="Nivea" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy"></iframe>
+        <img src="https://img.youtube.com/vi/VpuIx_WJIVM/maxresdefault.jpg" alt="Nivea Project Thumbnail" loading="lazy">
+        <div class="play-badge">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        </div>
       </div>
       <div class="work-content">
         <div class="work-header-row">
@@ -950,10 +990,13 @@
     <div class="work-card" 
          data-title="Woolworths" 
          data-year="2026" 
-         data-video="https://www.youtube.com/embed/gpt_WUBv0ZA?rel=0&autoplay=1" 
+         data-video-id="gpt_WUBv0ZA" 
          data-desc="Self-directed spec piece acting as the lead shot on the reel. Ensuring the drink is appetising, the pace is quick and fun and that it matches the woolworths CI.">
       <div class="work-media">
-        <iframe src="https://www.youtube.com/embed/gpt_WUBv0ZA?rel=0" title="Woolworths" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy"></iframe>
+        <img src="https://img.youtube.com/vi/gpt_WUBv0ZA/maxresdefault.jpg" alt="Woolworths Project Thumbnail" loading="lazy">
+        <div class="play-badge">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        </div>
       </div>
       <div class="work-content">
         <div class="work-header-row">
@@ -990,22 +1033,18 @@
     </div>
 
     <div class="modal-details">
-      <!-- 1. Title & Year -->
       <div class="modal-header">
         <h2 id="modal-title"></h2>
         <div id="modal-year" class="modal-year mono"></div>
       </div>
 
-      <!-- 2. Description directly follows Year -->
       <p id="modal-desc" class="modal-desc"></p>
 
-      <!-- 3. Software Tags at Bottom -->
       <div id="modal-software-group" class="project-meta-group">
         <span class="meta-label mono">Software</span>
         <div id="modal-software-tags" class="tags mono"></div>
       </div>
 
-      <!-- 4. Skills Tags at Bottom -->
       <div id="modal-skills-group" class="project-meta-group">
         <span class="meta-label mono">Skills</span>
         <div id="modal-skills-tags" class="tags mono"></div>
@@ -1087,9 +1126,10 @@
       btn.addEventListener('click', toggleTheme);
     });
 
-    // --- 2. HAMBURGER MENU TOGGLE ---
+    // --- 2. HAMBURGER MENU TOGGLE & OUTSIDE CLICK ---
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinks = document.querySelector('.nav-links');
+    const header = document.querySelector('header');
     const navAnchors = navLinks.querySelectorAll('a');
 
     hamburgerBtn.addEventListener('click', () => {
@@ -1102,6 +1142,13 @@
         hamburgerBtn.classList.remove('open');
         navLinks.classList.remove('active');
       });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (navLinks.classList.contains('active') && !header.contains(e.target)) {
+        hamburgerBtn.classList.remove('open');
+        navLinks.classList.remove('active');
+      }
     });
 
     // --- 3. DYNAMIC REEL SWITCHER ---
@@ -1171,16 +1218,18 @@
         const title = card.getAttribute('data-title');
         const year = card.getAttribute('data-year');
         const desc = card.getAttribute('data-desc');
-        const videoSrc = card.getAttribute('data-video');
+        const videoId = card.getAttribute('data-video-id');
         
-        // Extract tags directly from card DOM
+        // Build clean embed URL (minimizes overlays, hides related videos, hides info cards)
+        const cleanEmbedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&autohide=1`;
+
         const softwareHTML = card.querySelector('.project-meta-group:has(.tag-software) .tags').innerHTML;
         const skillsHTML = card.querySelector('.project-meta-group:has(.tag-skill) .tags').innerHTML;
 
         modalTitle.textContent = title;
         modalYear.textContent = year;
         modalDesc.textContent = desc;
-        modalIframe.src = videoSrc;
+        modalIframe.src = cleanEmbedUrl;
         modalSoftwareTags.innerHTML = softwareHTML;
         modalSkillsTags.innerHTML = skillsHTML;
 
