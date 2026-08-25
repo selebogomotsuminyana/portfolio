@@ -459,6 +459,19 @@
     border-color: var(--teal);
   }
 
+  /* WORK GRID REEL FILTERING — only the active reel's cards are shown */
+  .work-card[data-reel="comp"] {
+    display: none;
+  }
+
+  .work-grid.show-comp .work-card[data-reel="motion"] {
+    display: none;
+  }
+
+  .work-grid.show-comp .work-card[data-reel="comp"] {
+    display: block;
+  }
+
   /* CLEAN THUMBNAIL COVERAGE */
   .work-media {
     position: relative;
@@ -981,12 +994,13 @@
 <section id="work">
   <div class="section-head">
     <h2 class="display">Work</h2>
-    <span class="mono" style="font-size: 11px; color: var(--ink-dim);">[01 — 02]</span>
+    <span class="mono" id="work-count" style="font-size: 11px; color: var(--ink-dim);">[01 — 02]</span>
   </div>
 
-  <div class="work-grid">
+  <div class="work-grid" id="work-grid">
     <!-- Nivea Card -->
     <div class="work-card" 
+         data-reel="motion"
          data-title="Nivea" 
          data-year="2026" 
          data-video-id="VpuIx_WJIVM" 
@@ -1020,6 +1034,7 @@
 
     <!-- Woolworths Card -->
     <div class="work-card" 
+         data-reel="motion"
          data-title="Woolworths" 
          data-year="2026" 
          data-video-id="gpt_WUBv0ZA" 
@@ -1049,6 +1064,243 @@
         </div>
       </div>
     </div>
+
+    <!-- Avbob Card -->
+    <div class="work-card" 
+         data-reel="comp"
+         data-title="Avbob" 
+         data-year="2026" 
+         data-video-id="_yGkLcp38tg" 
+         data-desc="Handled the green screen keying and composite work to place the actor and bench into a 3D background provided by the 3D team. Composited the main commercial from start to finish, along with additional work for the BrandTVC and Funeral QR campaign spots.">
+      <div class="work-media">
+        <img src="https://img.youtube.com/vi/_yGkLcp38tg/maxresdefault.jpg" alt="Avbob Project Thumbnail" loading="lazy">
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>Avbob</h3>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Nuke</span>
+            <span class="tag tag-software">Fusion</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">CG Compositing</span>
+            <span class="tag tag-skill">Green Screen Keying</span>
+            <span class="tag tag-skill">Integration</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Changan Card -->
+    <div class="work-card" 
+         data-reel="comp"
+         data-title="Changan" 
+         data-year="2026" 
+         data-provider="vimeo"
+         data-video-id="1211924807" 
+         data-video-hash="f5e8348ce4" 
+         data-desc="Working with the 3D renders supplied by the 3D team, applying look and feel and small filmic details like bloom, lens flares and heat waves to Hunter reveal shot. Also assistance on other shots.">
+      <div class="work-media">
+        <img src="https://i.vimeocdn.com/video/2182217277-2157be10675ac30730aec999b1b71ff50a3e19da0572a9fca71d788fe8a44ea8-d_1280?region=us" alt="Changan Project Thumbnail" loading="lazy">
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>Changan</h3>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Nuke</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">CG Compositing</span>
+            <span class="tag tag-skill">Colour Correction</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cheetos Card -->
+    <div class="work-card" 
+         data-reel="comp"
+         data-title="Cheetos" 
+         data-year="2026" 
+         data-provider="vimeo"
+         data-video-id="1153936259" 
+         data-video-hash="9759defe65" 
+         data-desc="Integrating the Chester renders onto the plate supplied and rotoscoping where appropriate. Ensuring colour consistency of ad with other shots handled by other compositors and with Cheetos corporate identity.">
+      <div class="work-media">
+        <img src="https://i.vimeocdn.com/video/2106065008-b72423e74c3f835245b170e3e07a00f993d761d6308aee28d04c0e9216d3cea2-d_1280?region=us" alt="Cheetos Project Thumbnail" loading="lazy">
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>Cheetos</h3>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Nuke</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">CG Compositing</span>
+            <span class="tag tag-skill">Integration</span>
+            <span class="tag tag-skill">Colour Correction</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kings of Joburg Card -->
+    <div class="work-card" 
+         data-reel="comp"
+         data-title="Kings of Joburg" 
+         data-year="2025" 
+         data-video-id="pxg-JOUJSrA" 
+         data-desc="Worked on muzzle flashes, white eye composites, wire and crew removal, and touch-ups on scar prosthetics. Also handled CG compositing and background integration on interior vehicle shots with Mo and other cast members, along with general frame cleanup.">
+      <div class="work-media">
+        <img src="https://img.youtube.com/vi/pxg-JOUJSrA/maxresdefault.jpg" alt="Kings of Joburg Project Thumbnail" loading="lazy">
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>Kings of Joburg</h3>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Nuke</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">VFX Compositing</span>
+            <span class="tag tag-skill">Muzzle Flashes</span>
+            <span class="tag tag-skill">Set Cleanup</span>
+            <span class="tag tag-skill">CG Compositing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KFC Thailand Card -->
+    <div class="work-card" 
+         data-reel="comp"
+         data-title="KFC Thailand" 
+         data-year="2025" 
+         data-video-id="tmaG0uRK5_w" 
+         data-desc="Worked on a batch of shots doing basic 3D integration and light cleanup on 3D renders. Focused on matching color grades to keep everything accurate to KFC's official brand colors and corporate identity.">
+      <div class="work-media">
+        <img src="https://img.youtube.com/vi/tmaG0uRK5_w/maxresdefault.jpg" alt="KFC Thailand Project Thumbnail" loading="lazy">
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>KFC Thailand</h3>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Nuke</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">CG Compositing</span>
+            <span class="tag tag-skill">Brand Alignment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VisitQatar Card -->
+    <div class="work-card" 
+         data-reel="comp"
+         data-title="VisitQatar" 
+         data-year="2025" 
+         data-video-id="zDbpHSDAj8I" 
+         data-desc="Integrated live-action green screen footage of David Beckham into digital environments. Also composited 3D elements for the hero diamond rotation shot and collaborated with team members on rotoscoping.">
+      <div class="work-media">
+        <img src="https://img.youtube.com/vi/zDbpHSDAj8I/maxresdefault.jpg" alt="VisitQatar Project Thumbnail" loading="lazy">
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>VisitQatar</h3>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Nuke</span>
+            <span class="tag tag-software">Fusion</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">Green Screen Integration</span>
+            <span class="tag tag-skill">CG Integration</span>
+            <span class="tag tag-skill">Rotoscoping</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mastergood Card -->
+    <div class="work-card" 
+         data-reel="comp"
+         data-title="Mastergood" 
+         data-year="2024" 
+         data-video-id="j1YXTrrBadM" 
+         data-desc="Built out the look and mood for a festive Christmas campaign set inside a barn. Worked on interior details, color tweaks, and added subtle dust particles and light volumetric rays in Nuke to give the scene extra depth.">
+      <div class="work-media">
+        <img src="https://img.youtube.com/vi/j1YXTrrBadM/maxresdefault.jpg" alt="Mastergood Project Thumbnail" loading="lazy">
+      </div>
+      <div class="work-content">
+        <div class="work-header-row">
+          <h3>Mastergood</h3>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Software</span>
+          <div class="tags mono">
+            <span class="tag tag-software">Nuke</span>
+          </div>
+        </div>
+
+        <div class="project-meta-group">
+          <span class="meta-label mono">Skills</span>
+          <div class="tags mono">
+            <span class="tag tag-skill">CG Compositing</span>
+            <span class="tag tag-skill">Look Development</span>
+            <span class="tag tag-skill">Atmospheric Effects</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1213,6 +1465,15 @@
     };
 
     let activeReel = 'motion';
+    const workGrid = document.getElementById('work-grid');
+    const workCount = document.getElementById('work-count');
+
+    const revealActiveCards = () => {
+      const visibleCards = document.querySelectorAll(
+        `.work-card[data-reel="${activeReel}"]`
+      );
+      visibleCards.forEach(c => c.classList.add('in-view'));
+    };
 
     const handleReelToggle = (e) => {
       if (e) e.preventDefault();
@@ -1222,13 +1483,18 @@
         reelIframe.title = reelData.comp.title;
         reelText.textContent = reelData.comp.btnText;
         reelBtn.classList.add('is-comp');
+        workGrid.classList.add('show-comp');
+        workCount.textContent = '[01 — 07]';
       } else {
         activeReel = 'motion';
         reelIframe.src = reelData.motion.src;
         reelIframe.title = reelData.motion.title;
         reelText.textContent = reelData.motion.btnText;
         reelBtn.classList.remove('is-comp');
+        workGrid.classList.remove('show-comp');
+        workCount.textContent = '[01 — 02]';
       }
+      revealActiveCards();
     };
 
     reelBtn.addEventListener('click', handleReelToggle);
@@ -1262,9 +1528,13 @@
         const year = card.getAttribute('data-year');
         const desc = card.getAttribute('data-desc');
         const videoId = card.getAttribute('data-video-id');
-        
-        // Build clean embed URL
-        const cleanEmbedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&autohide=1`;
+        const provider = card.getAttribute('data-provider') || 'youtube';
+        const videoHash = card.getAttribute('data-video-hash');
+
+        // Build clean embed URL depending on the video provider
+        const cleanEmbedUrl = provider === 'vimeo'
+          ? `https://player.vimeo.com/video/${videoId}?h=${videoHash}&autoplay=1&title=0&byline=0&portrait=0`
+          : `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&autohide=1`;
 
         const softwareHTML = card.querySelector('.project-meta-group:has(.tag-software) .tags').innerHTML;
         const skillsHTML = card.querySelector('.project-meta-group:has(.tag-skill) .tags').innerHTML;
