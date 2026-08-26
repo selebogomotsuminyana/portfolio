@@ -4,10 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Browser Tab Title -->
 <title>Selebogo Motsuminyana</title>
 
-<!-- Favicon: Capitalised SM in accent blue on rounded white background -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ffffff'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23426475' font-family='Space Grotesk, sans-serif' font-weight='700' font-size='28' letter-spacing='-1'%3ESM%3C/text%3E%3C/svg%3E">
 
 <meta name="description" content="Motion design and compositing portfolio — Selebogo Motsuminyana, Johannesburg. After Effects, Blender, DaVinci Resolve Fusion.">
@@ -119,7 +117,7 @@
     transition: background-color 0.3s ease;
   }
 
-  /* CENTER-ALIGNED BRAND HOVER TEXT SWITCH */
+  /* CENTER-ALIGNED BRAND HOVER TEXT SWITCH (ENLARGED HOVER/TOUCH REGION) */
   .brand-switch {
     position: relative;
     font-family: 'Space Grotesk', sans-serif;
@@ -127,12 +125,16 @@
     font-size: 15px;
     letter-spacing: -0.01em;
     color: var(--header-text);
-    height: 26px;
-    min-width: 200px;
+    height: 38px;
+    min-width: 230px;
+    padding: 8px 16px;
     overflow: visible; 
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
   }
 
   .brand-switch span {
@@ -140,16 +142,17 @@
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
     white-space: nowrap;
     text-align: center;
+    pointer-events: none;
   }
 
   .brand-switch .sub {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
     right: 0;
     margin: 0 auto;
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(50%);
     color: var(--header-text);
     font-size: 13px;
     font-weight: 500;
@@ -157,14 +160,16 @@
     text-align: center;
   }
 
-  .brand-switch:hover span:first-child {
+  .brand-switch:hover span:first-child,
+  .brand-switch.is-active span:first-child {
     opacity: 0;
     transform: translateY(-100%);
   }
 
-  .brand-switch:hover .sub {
+  .brand-switch:hover .sub,
+  .brand-switch.is-active .sub {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-50%);
   }
 
   /* ---------- UNIVERSAL HAMBURGER & SMOOTH SLIDING DROPDOWN NAV ---------- */
@@ -304,7 +309,7 @@
   }
 
   @media (max-width: 768px) {
-    .brand-switch { min-width: 190px; font-size: 13px; }
+    .brand-switch { min-width: 200px; font-size: 13px; }
   }
 
   /* ---------- HERO ---------- */
@@ -917,6 +922,66 @@
     100% { transform: rotate(180deg) translateX(0); }
   }
 
+  /* ---------- BACK TO TOP FLOATING BUTTON ---------- */
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: #f4f1ea;
+    border: 1px solid rgba(244, 241, 234, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 90;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease, background-color 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .back-to-top:hover {
+    background: var(--ink);
+    color: #f4f1ea;
+    transform: translateY(-3px);
+  }
+
+  .back-to-top svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media (max-width: 768px) {
+    .back-to-top {
+      bottom: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+    }
+    
+    .back-to-top svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
     .work-card { opacity: 1; transform: none; }
@@ -929,12 +994,11 @@
 <div class="grain"></div>
 
 <header>
-  <a href="#" class="brand-switch">
+  <a href="javascript:void(0)" class="brand-switch" id="brand-switch-btn">
     <span>Selebogo Motsuminyana</span>
     <span class="sub mono">Sele for short</span>
   </a>
 
-  <!-- Universal Hamburger Menu Button -->
   <button type="button" class="hamburger" id="hamburger-btn" aria-label="Toggle Navigation Menu">
     <span></span>
     <span></span>
@@ -998,7 +1062,6 @@
   </div>
 
   <div class="work-grid" id="work-grid">
-    <!-- Nivea Card -->
     <div class="work-card" 
          data-reel="motion"
          data-title="Nivea" 
@@ -1032,7 +1095,6 @@
       </div>
     </div>
 
-    <!-- Woolworths Card -->
     <div class="work-card" 
          data-reel="motion"
          data-title="Woolworths" 
@@ -1065,7 +1127,6 @@
       </div>
     </div>
 
-    <!-- Avbob Card -->
     <div class="work-card" 
          data-reel="comp"
          data-title="Avbob" 
@@ -1099,76 +1160,6 @@
       </div>
     </div>
 
-    <!-- Changan Card -->
-    <div class="work-card" 
-         data-reel="comp"
-         data-title="Changan" 
-         data-year="2026" 
-         data-provider="vimeo"
-         data-video-id="1211924807" 
-         data-video-hash="f5e8348ce4" 
-         data-desc="Working with the 3D renders supplied by the 3D team, applying look and feel and small filmic details like bloom, lens flares and heat waves to Hunter reveal shot. Also assistance on other shots.">
-      <div class="work-media">
-        <img src="https://i.vimeocdn.com/video/2182217277-2157be10675ac30730aec999b1b71ff50a3e19da0572a9fca71d788fe8a44ea8-d_1280?region=us" alt="Changan Project Thumbnail" loading="lazy">
-      </div>
-      <div class="work-content">
-        <div class="work-header-row">
-          <h3>Changan</h3>
-        </div>
-
-        <div class="project-meta-group">
-          <span class="meta-label mono">Software</span>
-          <div class="tags mono">
-            <span class="tag tag-software">Nuke</span>
-          </div>
-        </div>
-
-        <div class="project-meta-group">
-          <span class="meta-label mono">Skills</span>
-          <div class="tags mono">
-            <span class="tag tag-skill">CG Compositing</span>
-            <span class="tag tag-skill">Colour Correction</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cheetos Card -->
-    <div class="work-card" 
-         data-reel="comp"
-         data-title="Cheetos" 
-         data-year="2026" 
-         data-provider="vimeo"
-         data-video-id="1153936259" 
-         data-video-hash="9759defe65" 
-         data-desc="Integrating the Chester renders onto the plate supplied and rotoscoping where appropriate. Ensuring colour consistency of ad with other shots handled by other compositors and with Cheetos corporate identity.">
-      <div class="work-media">
-        <img src="https://i.vimeocdn.com/video/2106065008-b72423e74c3f835245b170e3e07a00f993d761d6308aee28d04c0e9216d3cea2-d_1280?region=us" alt="Cheetos Project Thumbnail" loading="lazy">
-      </div>
-      <div class="work-content">
-        <div class="work-header-row">
-          <h3>Cheetos</h3>
-        </div>
-
-        <div class="project-meta-group">
-          <span class="meta-label mono">Software</span>
-          <div class="tags mono">
-            <span class="tag tag-software">Nuke</span>
-          </div>
-        </div>
-
-        <div class="project-meta-group">
-          <span class="meta-label mono">Skills</span>
-          <div class="tags mono">
-            <span class="tag tag-skill">CG Compositing</span>
-            <span class="tag tag-skill">Integration</span>
-            <span class="tag tag-skill">Colour Correction</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Kings of Joburg Card -->
     <div class="work-card" 
          data-reel="comp"
          data-title="Kings of Joburg" 
@@ -1202,7 +1193,6 @@
       </div>
     </div>
 
-    <!-- KFC Thailand Card -->
     <div class="work-card" 
          data-reel="comp"
          data-title="KFC Thailand" 
@@ -1228,13 +1218,13 @@
           <span class="meta-label mono">Skills</span>
           <div class="tags mono">
             <span class="tag tag-skill">CG Compositing</span>
+            <span class="tag tag-skill">3D Integration</span>
             <span class="tag tag-skill">Brand Alignment</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- VisitQatar Card -->
     <div class="work-card" 
          data-reel="comp"
          data-title="VisitQatar" 
@@ -1268,7 +1258,6 @@
       </div>
     </div>
 
-    <!-- Mastergood Card -->
     <div class="work-card" 
          data-reel="comp"
          data-title="Mastergood" 
@@ -1300,11 +1289,9 @@
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- EXPANDED MODAL STRUCTURE -->
 <div class="modal-overlay" id="work-modal">
   <div class="modal-container">
     <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
@@ -1343,19 +1330,16 @@
   <div class="about-grid">
     <div class="about-avatar-wrap">
       <div class="flip-card" id="profile-flip-card">
-        <!-- Front Side (Photo) -->
         <div class="flip-card-face flip-card-front">
           <img src="Selebogo Motsuminyana.png" alt="Selebogo Motsuminyana" class="about-avatar">
         </div>
-        <!-- Back Side (Illustration) -->
         <div class="flip-card-face flip-card-back">
           <img src="Lil_TB.png" alt="Selebogo Motsuminyana Illustration" class="about-avatar">
         </div>
-        <!-- Interactive Corner Page Fold -->
         <div class="page-fold" id="page-fold-btn" aria-label="Flip Card">
           <svg viewBox="0 0 100 100">
             <path class="fold-shadow" d="M 0 100 L 100 0 L 100 100 Z" />
-            <path class="fold-bg" d="M 0 100 L 100 0 L 0 0 Z" />
+            <path class="fold-bg" d="M 0 100 L 0 0 L 100 0 Z" />
           </svg>
         </div>
       </div>
@@ -1400,8 +1384,34 @@
   <span class="mono">BUILT FRAME BY FRAME</span>
 </footer>
 
+<button type="button" class="back-to-top" id="back-to-top-btn" aria-label="Back to top">
+  <svg viewBox="0 0 24 24">
+    <line x1="12" y1="19" x2="12" y2="5"></line>
+    <polyline points="5 12 12 5 19 12"></polyline>
+  </svg>
+</button>
+
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+
+    // --- 0. BRAND SWITCH CLICK & AUTO ROLLBACK LOGIC ---
+    const brandBtn = document.getElementById('brand-switch-btn');
+    let brandTimer = null;
+
+    brandBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Trigger rollback text animation via active class
+      brandBtn.classList.add('is-active');
+
+      // Clear existing timer if clicked repeatedly
+      if (brandTimer) clearTimeout(brandTimer);
+
+      // Rollback back to original text state after 1000ms (1 sec)
+      brandTimer = setTimeout(() => {
+        brandBtn.classList.remove('is-active');
+      }, 1000);
+    });
 
     // --- 1. DARK MODE TOGGLE FUNCTIONALITY ---
     const themeBtns = document.querySelectorAll('.theme-btn');
@@ -1484,7 +1494,7 @@
         reelText.textContent = reelData.comp.btnText;
         reelBtn.classList.add('is-comp');
         workGrid.classList.add('show-comp');
-        workCount.textContent = '[01 — 07]';
+        workCount.textContent = '[01 — 05]';
       } else {
         activeReel = 'motion';
         reelIframe.src = reelData.motion.src;
@@ -1528,13 +1538,9 @@
         const year = card.getAttribute('data-year');
         const desc = card.getAttribute('data-desc');
         const videoId = card.getAttribute('data-video-id');
-        const provider = card.getAttribute('data-provider') || 'youtube';
-        const videoHash = card.getAttribute('data-video-hash');
-
-        // Build clean embed URL depending on the video provider
-        const cleanEmbedUrl = provider === 'vimeo'
-          ? `https://player.vimeo.com/video/${videoId}?h=${videoHash}&autoplay=1&title=0&byline=0&portrait=0`
-          : `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&autohide=1`;
+        
+        // Build clean embed URL
+        const cleanEmbedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&autohide=1`;
 
         const softwareHTML = card.querySelector('.project-meta-group:has(.tag-software) .tags').innerHTML;
         const skillsHTML = card.querySelector('.project-meta-group:has(.tag-skill) .tags').innerHTML;
@@ -1598,6 +1604,24 @@
 
     flipCard.addEventListener('mouseleave', () => {
       flipCard.classList.remove('near-corner');
+    });
+
+    // --- 7. BACK TO TOP BUTTON LOGIC ---
+    const backToTopBtn = document.getElementById('back-to-top-btn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
 
   });
